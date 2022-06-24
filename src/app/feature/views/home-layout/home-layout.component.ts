@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CurrencyStaticValue, ICurrency, ICurrencyData } from 'src/app/shared/models/currency.model';
 import { CurrencyService } from '../../services/currency.service';
 
@@ -22,13 +22,17 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   public currencyData: ICurrency[] = [];
 
+  public  isLoading$!: Observable<boolean>
+
   private sub!: Subscription;
 
   constructor(private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
 
-    this.sub = this.currencyService.fetchCurrency().subscribe((currencyResponse: ICurrencyData[]) => {
+    this.isLoading$ = this.currencyService.isLoading;
+
+    this.sub = this.currencyService.fetchCurrency().subscribe((currencyResponse: ICurrencyData[] ) => {
         const firstCurrencyInit = currencyResponse.find((currency: ICurrency) => currency.code === CurrencyStaticValue.USD );
         const secondCurrencyInit = currencyResponse.find((currency: ICurrency) => currency.code === CurrencyStaticValue.UAH );
 

@@ -1,14 +1,17 @@
 <section class="home_layout">
   <header class="home_layout__header header">
-    <app-nav-bar 
-    [UAHCurrency]="UAHCurrency" 
-    [USDCurrency]="USDCurrency" 
-    [EURCurrency]="EURCurrency" 
+    <app-nav-bar
+    [UAHCurrency]="UAHCurrency"
+    [USDCurrency]="USDCurrency"
+    [EURCurrency]="EURCurrency"
     ></app-nav-bar>
   </header>
 
   <main class="home_layout__body body">
-    <section class="body__block">
+
+
+
+    <section class="body__block"  *ngIf="!(isLoading$ | async); else loadingTemplate">
       <header class="body__header">
         <h2 class="body__title">Convert Currency</h2>
       </header>
@@ -25,16 +28,16 @@
                 [(ngModel)]="firstCurrencyCode"
                 (change)="changeHandler($event)"
         >
-          <option 
-            *ngFor="let currency of currencyData" 
-            [value]="currency.code" 
-          > 
+          <option
+            *ngFor="let currency of currencyData"
+            [value]="currency.code"
+          >
             {{ currency.code }}
           </option>
         </select>
       </section>
 
-    <section class="body__field" >
+      <section class="body__field" >
       <input  class="body__control"
               name="secondCurrencyAmount"
               type="number"
@@ -46,15 +49,21 @@
               [(ngModel)]="secondCurrencyCode"
               (change)="changeHandler($event)"
       >
-      <option 
-            *ngFor="let currency of currencyData" 
-            [value]="currency.code" 
-          > 
+      <option
+            *ngFor="let currency of currencyData"
+            [value]="currency.code"
+          >
             {{currency.code}}
           </option>
       </select>
     </section>
-
     </section>
+
+   <ng-template #loadingTemplate>
+     <section class="body__loading_template" >
+       <h2 class="body__loading">Loading...</h2>
+     </section>
+   </ng-template>
+
   </main>
 </section>

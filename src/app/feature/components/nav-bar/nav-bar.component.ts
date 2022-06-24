@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyStaticValue, ICurrency } from 'src/app/shared/models/currency.model';
 import { CurrencyService } from '../../services/currency.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,6 +12,8 @@ export class NavBarComponent implements OnInit {
  private _UAHCurrency!: ICurrency;
  private _USDCurrency!: ICurrency;
  private _EURCurrency!: ICurrency;
+
+ public isLoading$!: Observable<boolean>;
 
   @Input()
   set UAHCurrency(value: ICurrency) {
@@ -25,7 +28,6 @@ export class NavBarComponent implements OnInit {
     this._EURCurrency = value;
   }
 
-
   get UAHCurrency() {
     return this._UAHCurrency;
   }
@@ -36,10 +38,10 @@ export class NavBarComponent implements OnInit {
     return this._EURCurrency;
   }
 
-  constructor() { }
+  constructor(private  currencyService: CurrencyService) { }
 
   ngOnInit(): void {
-
+    this.isLoading$ = this.currencyService.isLoading;
   }
 
 }

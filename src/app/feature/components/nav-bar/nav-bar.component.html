@@ -1,19 +1,17 @@
 <section class="navbar">
   <h1 class="navbar__title">Currency App</h1>
-  <section class="navbar__block">
 
+  <section class="navbar__block" *ngIf="!(isLoading$ | async)">
     <section class="navbar__currency" *ngIf="USDCurrency">
       1 {{ USDCurrency.code }} = {{ UAHCurrency.value | fixedLength: 2 }} UAH
     </section>
-
     <section class="navbar__separator">
       /
     </section>
-
     <section class="navbar__currency" *ngIf="EURCurrency">
       1 {{ EURCurrency.code }} = {{ ( UAHCurrency.value / EURCurrency.value) | fixedLength: 2 }} UAH
     </section>
-
   </section>
+
 </section>
 
